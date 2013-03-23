@@ -15,6 +15,7 @@ class INEventHandler(ProcessEvent):
 		self.less_command(event)
 
 	def less_command(self, event):
+		#FIXME: ignore lists
 		if not event.path in self.ignore_list:
 
 			call = 'lessc ' + event.path + '/' + event.name + ' > '
@@ -31,6 +32,8 @@ if __name__ == '__main__':
 
 		if os.path.isdir(indir):
 			wm = WatchManager()
+			
+			#TODO ignores
 			ignore = set(sys.argv[2:]) if len(sys.argv) > 3 else set()
 			notifier = Notifier(wm, INEventHandler(outdir, ignore))
 			wdd = wm.add_watch(indir, IN_MODIFY, rec=False)
@@ -49,4 +52,4 @@ if __name__ == '__main__':
 
 	else:
 		#naw nuff arguments
-		print "naw nuff"
+		print "Usage: python this-file.py input_directory output_directory"
